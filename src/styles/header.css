@@ -1,0 +1,26 @@
+header {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    background-color: #2e0200;
+    background-image: url('../imgs/wood-pattern.png');
+    background-size: 100px;
+    padding: 12px;
+    color: white;
+    gap: 12px;
+    border: 6px solid #2e0200;
+}
+
+.header-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.score-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
