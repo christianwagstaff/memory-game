@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "./Card";
 import "../styles/ImageGrid.css";
 import Bear from "../imgs/icons8-bear-100.png";
@@ -17,7 +17,7 @@ import Spider from "../imgs/icons8-spider-100.png";
 const imageList = [
   { img: Bear, alt: "Bear", title: "Bear", id: 0 },
   { img: Bulldog, alt: "Bulldog", title: "Bulldog", id: 1 },
-  { img: Cat, alt: "Bear", title: "Cat", id: 2 },
+  { img: Cat, alt: "Cat", title: "Cat", id: 2 },
   { img: Cow, alt: "Cow", title: "Cow", id: 3 },
   { img: Crab, alt: "Crab", title: "Crab", id: 4 },
   { img: Dog, alt: "Dog", title: "Dog", id: 5 },
@@ -30,25 +30,44 @@ const imageList = [
 ];
 
 export default function ImageGrid() {
+  const [shuffleList, setShuffleList] = useState(shuffleArray(imageList));
+
   function handleClick(id) {
-    console.log(id);
+    const selected = imageList.filter((animal) => animal.id === id);
+    console.log(selected);
+    setShuffleList(shuffleArray(shuffleList));
   }
 
   return (
     <div className="image-grid">
       <div className="card-container">
-        {[...imageList].map((img) => {
+        {[...shuffleList].map((img) => {
+          const key = img.id;
+          const src = img.img;
+          const alt = img.alt;
+          const title = img.title;
           return (
             <Card
-              key={img.id}
-              src={img.img}
-              alt={img.alt}
-              title={img.title}
-              onClick={() => handleClick(img.id)}
+              key={key}
+              src={src}
+              alt={alt}
+              title={title}
+              onClick={() => handleClick(key)}
             />
           );
         })}
       </div>
     </div>
   );
+}
+
+function shuffleArray(arr) {
+  // Fisher-Yates Shuffle Algorithm for Shuffling an Array
+  // We duplicate the array as to not mutate the original
+  const copy = arr.slice(0);
+  for (let i = copy.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }
