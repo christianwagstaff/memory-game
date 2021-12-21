@@ -11,12 +11,15 @@ header {
     color: white;
     gap: 12px;
     border: 6px solid #2e0200;
+    border-radius: 5px;
+    font-size: larger;
 }
 
 .header-bottom {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    font-size: large;
 }
 
 .score-card {

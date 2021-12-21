@@ -1,0 +1,18 @@
+.image-grid {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 12px;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
