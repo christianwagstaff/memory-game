@@ -10,6 +10,7 @@ export default function ImageGrid(props) {
 
   const [shuffleList, setShuffleList] = useState(shuffleArray(imageList));
   const [restart, setRestart] = useState(false);
+  const [winner, setWinner] = useState(false);
   const [message, setMessage] = useState(
     `
     Roar! Roar! 
@@ -27,6 +28,9 @@ export default function ImageGrid(props) {
       endgame(selected);
     } else {
       const newArr = [...selectedList, id];
+      if (newArr.length === imageList.length) {
+        winGame(selected);
+      }
       setSelectedList(newArr);
       setShuffleList(shuffleArray(shuffleList));
     }
@@ -38,14 +42,26 @@ export default function ImageGrid(props) {
     setRestart(true);
   }
 
+  function winGame(selected) {
+    setMessage(displayWinningMessage(selected.cry));
+    setImg({ src: selected.img, alt: selected.alt });
+    setWinner(true);
+  }
+
   function resetGame() {
     setSelectedList([]);
     setRestart(false);
+    setWinner(false);
   }
 
   function displayGameOverMessage(cry) {
     const message = `${cry}! ${cry}! 
     Game Over! You have already clicked me!`;
+    return message;
+  }
+  function displayWinningMessage(cry) {
+    const message = `${cry}! ${cry}! 
+    Congratulations! You clicked each of us once!`;
     return message;
   }
 
@@ -69,6 +85,15 @@ export default function ImageGrid(props) {
         })}
       </div>
       {restart ? (
+        <GameOver
+          src={img.src}
+          alt={img.alt}
+          message={message}
+          playAgain={resetGame}
+          score={selectedList.length}
+        />
+      ) : null}
+      {winner ? (
         <GameOver
           src={img.src}
           alt={img.alt}
