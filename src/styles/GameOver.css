@@ -27,19 +27,19 @@
     border: 10px solid rgb(255, 245, 98);
     font-size: large;
 }
-
+ 
 .popup h1 {
     font-size: x-large;
     white-space: pre-line;
 }
 
 .image-container {
-    width: 50%;
-    height: auto;
+    height: 50%;
+    width: 100%;
 }
 
 .image-container img {
-    width: 100%;
+    height: 100%;
 }
 
 .popup button {
