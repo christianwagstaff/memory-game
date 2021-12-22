@@ -4,16 +4,19 @@
     align-items: center;
     background-color: rgb(126, 255, 249);
     border-radius: 5px;
-    width: 120px;
-    height: 150px;
 }
 
 .card-image {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 0.5rem;
     pointer-events: none;
+}
+
+.card-image img {
+    height: 100%;
+    width: 100%;
 }
 
 .card h3 {
@@ -23,4 +26,5 @@
     text-align: center;
     border-radius: 0px 0px 5px 5px;
     pointer-events: none;
+    font-size: small;
 }

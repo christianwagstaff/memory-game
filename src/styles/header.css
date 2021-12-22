@@ -1,7 +1,7 @@
 header {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     justify-content: center;
     align-items: center;
     background-color: #2e0200;
@@ -19,7 +19,7 @@ header {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    font-size: large;
+    font-size: small;
 }
 
 .score-card {

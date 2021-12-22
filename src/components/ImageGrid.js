@@ -1,41 +1,52 @@
 import React, { useState } from "react";
 import Card from "./Card";
+import GameOver from "./GameOver";
 import "../styles/ImageGrid.css";
-import Bear from "../imgs/icons8-bear-100.png";
-import Bulldog from "../imgs/icons8-bulldog-100.png";
-import Cat from "../imgs/icons8-cat-100.png";
-import Cow from "../imgs/icons8-cow-100.png";
-import Crab from "../imgs/icons8-crab-100.png";
-import Dog from "../imgs/icons8-dog-100.png";
-import Jellyfish from "../imgs/icons8-jellyfish-100.png";
-import Lamb from "../imgs/icons8-lamb-100.png";
-import Owl from "../imgs/icons8-owl-100.png";
-import Pig from "../imgs/icons8-pig-100.png";
-import Pigeon from "../imgs/icons8-pigeon-100.png";
-import Spider from "../imgs/icons8-spider-100.png";
 
-const imageList = [
-  { img: Bear, alt: "Bear", title: "Bear", id: 0 },
-  { img: Bulldog, alt: "Bulldog", title: "Bulldog", id: 1 },
-  { img: Cat, alt: "Cat", title: "Cat", id: 2 },
-  { img: Cow, alt: "Cow", title: "Cow", id: 3 },
-  { img: Crab, alt: "Crab", title: "Crab", id: 4 },
-  { img: Dog, alt: "Dog", title: "Dog", id: 5 },
-  { img: Jellyfish, alt: "Jellyfish", title: "Jellyfish", id: 6 },
-  { img: Lamb, alt: "Lamb", title: "Lamb", id: 7 },
-  { img: Owl, alt: "Owl", title: "Owl", id: 8 },
-  { img: Pig, alt: "Pig", title: "Pig", id: 9 },
-  { img: Pigeon, alt: "Pigeon", title: "Pigeon", id: 10 },
-  { img: Spider, alt: "Spider", title: "Spider", id: 11 },
-];
+export default function ImageGrid(props) {
+  const imageList = props.imageList;
+  const selectedList = props.selectedList;
+  const setSelectedList = props.setSelectedList;
 
-export default function ImageGrid() {
   const [shuffleList, setShuffleList] = useState(shuffleArray(imageList));
+  const [restart, setRestart] = useState(false);
+  const [message, setMessage] = useState(
+    `
+    Roar! Roar! 
+    Game Over! You have already clicked me!
+    `
+  );
+  const [img, setImg] = useState({
+    src: imageList[0].img,
+    alt: imageList[0].alt,
+  });
 
   function handleClick(id) {
-    const selected = imageList.filter((animal) => animal.id === id);
-    console.log(selected);
-    setShuffleList(shuffleArray(shuffleList));
+    const selected = imageList.filter((animal) => animal.id === id)[0];
+    if (selectedList.includes(id)) {
+      endgame(selected);
+    } else {
+      const newArr = [...selectedList, id];
+      setSelectedList(newArr);
+      setShuffleList(shuffleArray(shuffleList));
+    }
+  }
+
+  function endgame(selected) {
+    setMessage(displayGameOverMessage(selected.cry));
+    setImg({ src: selected.img, alt: selected.alt });
+    setRestart(true);
+  }
+
+  function resetGame() {
+    setSelectedList([]);
+    setRestart(false);
+  }
+
+  function displayGameOverMessage(cry) {
+    const message = `${cry}! ${cry}! 
+    Game Over! You have already clicked me!`;
+    return message;
   }
 
   return (
@@ -57,6 +68,15 @@ export default function ImageGrid() {
           );
         })}
       </div>
+      {restart ? (
+        <GameOver
+          src={img.src}
+          alt={img.alt}
+          message={message}
+          playAgain={resetGame}
+          score={selectedList.length}
+        />
+      ) : null}
     </div>
   );
 }
